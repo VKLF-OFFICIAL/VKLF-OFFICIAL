@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="360" viewBox="0 0 1000 360" role="img" aria-label="Terminal: whoami — Jesús Yeste Ramírez (VKLF), estudiante de ASIR, eJPTv2, profesor en LionxSecurity y cibercooperante de INCIBE">
+  <defs>
+    <style>
+      .mono{font-family:'Courier New',Consolas,'Liberation Mono',monospace;font-size:17px}
+      .p{fill:#d70000;font-weight:700}
+      .c{fill:#e8e8e8}
+      .o{fill:#9a8a8a}
+      .h{fill:#ff4d4d}
+    </style>
+  </defs>
+
+  <rect width="1000" height="360" fill="#0a0303"/>
+  <rect x="1" y="1" width="998" height="358" rx="10" fill="#0d0606" stroke="#2a0d0d" stroke-width="2"/>
+
+  <!-- Barra de título -->
+  <path d="M1 11a10 10 0 0 1 10-10h978a10 10 0 0 1 10 10v29H1z" fill="#140808"/>
+  <line x1="1" y1="40" x2="999" y2="40" stroke="#2a0d0d" stroke-width="2"/>
+  <circle cx="26" cy="21" r="6" fill="#d70000"/>
+  <circle cx="46" cy="21" r="6" fill="#8a1f1f"/>
+  <circle cx="66" cy="21" r="6" fill="#2a0d0d"/>
+  <text x="500" y="26" text-anchor="middle" class="mono" style="font-size:14px" fill="#9a8a8a">root@vklf: ~</text>
+
+  <g class="mono">
+    <g opacity="0"><animate attributeName="opacity" from="0" to="1" begin=".3s" dur=".15s" fill="freeze"/>
+      <text x="32" y="80"><tspan class="p">root@vklf</tspan><tspan class="o">:~$ </tspan><tspan class="c">whoami</tspan></text>
+    </g>
+    <g opacity="0"><animate attributeName="opacity" from="0" to="1" begin=".9s" dur=".15s" fill="freeze"/>
+      <text x="32" y="108" class="c">Jesús Yeste Ramírez <tspan class="h">// VKLF</tspan> · Granada, España</text>
+    </g>
+
+    <g opacity="0"><animate attributeName="opacity" from="0" to="1" begin="1.6s" dur=".15s" fill="freeze"/>
+      <text x="32" y="148"><tspan class="p">root@vklf</tspan><tspan class="o">:~$ </tspan><tspan class="c">cat perfil.txt</tspan></text>
+    </g>
+    <g opacity="0"><animate attributeName="opacity" from="0" to="1" begin="2.2s" dur=".15s" fill="freeze"/>
+      <text x="32" y="176" class="o"><tspan class="h">[+]</tspan> <tspan class="c">Pentester junior certificado</tspan> eJPTv2 (INE Security)</text>
+    </g>
+    <g opacity="0"><animate attributeName="opacity" from="0" to="1" begin="2.5s" dur=".15s" fill="freeze"/>
+      <text x="32" y="202" class="o"><tspan class="h">[+]</tspan> <tspan class="c">Estudiante de ASIR</tspan> con especialización en hacking ético</text>
+    </g>
+    <g opacity="0"><animate attributeName="opacity" from="0" to="1" begin="2.8s" dur=".15s" fill="freeze"/>
+      <text x="32" y="228" class="o"><tspan class="h">[+]</tspan> <tspan class="c">Profesor de ciberseguridad</tspan> en LionxSecurity</text>
+    </g>
+    <g opacity="0"><animate attributeName="opacity" from="0" to="1" begin="3.1s" dur=".15s" fill="freeze"/>
+      <text x="32" y="254" class="o"><tspan class="h">[+]</tspan> <tspan class="c">Cibercooperante</tspan> del INCIBE</text>
+    </g>
+
+    <g opacity="0"><animate attributeName="opacity" from="0" to="1" begin="3.8s" dur=".15s" fill="freeze"/>
+      <text x="32" y="294"><tspan class="p">root@vklf</tspan><tspan class="o">:~$ </tspan><tspan class="c">echo $OBJETIVO</tspan></text>
+    </g>
+    <g opacity="0"><animate attributeName="opacity" from="0" to="1" begin="4.4s" dur=".15s" fill="freeze"/>
+      <text x="32" y="322" class="h">Romper sistemas para hacerlos más fuertes, y documentarlo paso a paso.</text>
+    </g>
+  </g>
+
+  <!-- Cursor -->
+  <rect x="32" y="333" width="10" height="4" fill="#ff4d4d" opacity="0">
+    <animate attributeName="opacity" values="0;1;0" dur="1s" begin="4.6s" repeatCount="indefinite"/>
+  </rect>
+</svg>

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="210" viewBox="0 0 1000 210" role="img" aria-label="Certificación eJPTv2 — eLearnSecurity Junior Penetration Tester, INE Security, emitida en agosto de 2026, válida hasta agosto de 2029">
+  <defs>
+    <linearGradient id="hex" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d70000"/>
+      <stop offset="1" stop-color="#8a1f1f"/>
+    </linearGradient>
+    <filter id="g" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="7" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      .mono{font-family:'Courier New',Consolas,'Liberation Mono',monospace}
+    </style>
+  </defs>
+
+  <rect width="1000" height="210" fill="#0a0303"/>
+  <rect x="1" y="1" width="998" height="208" rx="10" fill="#0d0606" stroke="#2a0d0d" stroke-width="2"/>
+  <rect x="1" y="1" width="6" height="208" rx="3" fill="#d70000"/>
+
+  <!-- Insignia -->
+  <g transform="translate(118 105)">
+    <polygon points="0,-74 64,-37 64,37 0,74 -64,37 -64,-37" fill="none" stroke="#d70000" stroke-width="2" opacity=".5" filter="url(#g)">
+      <animate attributeName="opacity" values=".25;.7;.25" dur="3s" repeatCount="indefinite"/>
+    </polygon>
+    <polygon points="0,-62 54,-31 54,31 0,62 -54,31 -54,-31" fill="url(#hex)"/>
+    <polygon points="0,-54 47,-27 47,27 0,54 -47,27 -47,-27" fill="none" stroke="#ff4d4d" stroke-width="1" opacity=".6"/>
+    <text y="-4" text-anchor="middle" class="mono" font-size="26" font-weight="700" fill="#ffffff">eJPT</text>
+    <text y="22" text-anchor="middle" class="mono" font-size="17" font-weight="700" fill="#0a0303">v2</text>
+  </g>
+
+  <!-- Datos -->
+  <text x="222" y="54" class="mono" font-size="13" fill="#9a8a8a" letter-spacing="2">// CERTIFICACIÓN VERIFICADA</text>
+  <text x="222" y="88" class="mono" font-size="25" font-weight="700" fill="#e8e8e8">eLearnSecurity Junior Penetration Tester</text>
+  <text x="222" y="116" class="mono" font-size="15" fill="#9a8a8a">INE Security · Emitida <tspan fill="#e8e8e8">08/2026</tspan> · Válida hasta <tspan fill="#e8e8e8">08/2029</tspan></text>
+
+  <!-- Áreas -->
+  <g class="mono" font-size="13">
+    <rect x="222" y="138" width="208" height="30" rx="15" fill="#140808" stroke="#2a0d0d"/>
+    <text x="326" y="158" text-anchor="middle" fill="#ff4d4d">Metodología de evaluación</text>
+    <rect x="440" y="138" width="152" height="30" rx="15" fill="#140808" stroke="#2a0d0d"/>
+    <text x="516" y="158" text-anchor="middle" fill="#ff4d4d">Auditoría de redes</text>
+    <rect x="602" y="138" width="152" height="30" rx="15" fill="#140808" stroke="#2a0d0d"/>
+    <text x="678" y="158" text-anchor="middle" fill="#ff4d4d">Auditoría de hosts</text>
+    <rect x="764" y="138" width="98" height="30" rx="15" fill="#140808" stroke="#2a0d0d"/>
+    <text x="813" y="158" text-anchor="middle" fill="#ff4d4d">Web</text>
+    <rect x="872" y="138" width="98" height="30" rx="15" fill="#140808" stroke="#2a0d0d"/>
+    <text x="921" y="158" text-anchor="middle" fill="#ff4d4d">Informes</text>
+  </g>
+
+  <text x="970" y="54" text-anchor="end" class="mono" font-size="13" fill="#d70000">verificar ↗</text>
+</svg>
