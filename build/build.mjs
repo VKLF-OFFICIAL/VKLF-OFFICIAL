@@ -120,7 +120,7 @@ for (const [id, t] of Object.entries(titles)) {
 
 /* ------------------------ EXPERIENCIA Y FORMACIÓN ------------------------ */
 {
-  const gap = 16, lw = 500, rw = W - lw - gap, H = 30 + experience.length * 70 + 14;
+  const gap = 16, lw = 500, rw = W - lw - gap, H = 76 + (experience.length - 1) * 70 + 43 + 26;
   let t = '';
   // Experiencia
   t += `<g>${panel(lw, H)}${mono(28, 38, 'EXPERIENCIA', 12, RED2, { ls: 3, weight: 700 })}<line x1="40" y1="64" x2="40" y2="${H - 44}" stroke="${LINE}" stroke-width="2"/>`;
