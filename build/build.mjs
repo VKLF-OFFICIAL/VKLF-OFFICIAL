@@ -1,4 +1,4 @@
-// Genera las piezas SVG del README de perfil con la identidad de VKLF.
+// Genera las piezas SVG animadas del README de perfil (identidad VKLF: rojo, negro y logo).
 // Uso: node build/build.mjs   (edita los datos de abajo y vuelve a ejecutarlo)
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, unlinkSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -7,139 +7,148 @@ import { fileURLToPath } from 'node:url';
 const here = dirname(fileURLToPath(import.meta.url));
 const out = join(here, '..', 'assets');
 mkdirSync(out, { recursive: true });
-for (const f of readdirSync(out)) if (f.endsWith('.svg')) unlinkSync(join(out, f));
+for (const f of readdirSync(out)) if (f.endsWith('.svg') && f !== 'stats.svg') unlinkSync(join(out, f));
 const b64 = (f) => readFileSync(join(here, 'src', f)).toString('base64');
 
 /* ------------------------------ DATOS ------------------------------ */
-const name = 'Jesús Yeste Ramírez';
-const role = 'Pentester junior · Seguridad ofensiva';
-const typed = 'eJPTv2 // Profesor en LionxSecurity // Cibercooperante INCIBE';
-const about = 'Me interesa entender cómo se rompen los sistemas para saber protegerlos. Practico en laboratorios de pentesting, documento cada máquina paso a paso en vklf.es y enseño lo que aprendo como profesor de ciberseguridad.';
-const facts = [
-  { id: 'certificacion', label: 'CERTIFICACIÓN', big: 'eJPTv2', sub: 'INE Security · 2026', cta: 'VERIFICAR →' },
-  { id: 'docencia', label: 'DOCENCIA', big: 'LionxSecurity', sub: 'Profesor de ciberseguridad' },
-  { id: 'divulgacion', label: 'DIVULGACIÓN', big: 'INCIBE', sub: 'Cibercooperante' },
+const titles = { 'sobre-mi': 'SOBRE MÍ', certificacion: 'CERTIFICACIÓN', arsenal: 'ARSENAL', trayectoria: 'EXPERIENCIA Y FORMACIÓN', github: 'GITHUB', contacto: 'CONTACTO' };
+const experience = [
+  ['09/2026 — HOY', 'Profesor de ciberseguridad', 'LionxSecurity'],
+  ['09/2026 — HOY', 'Cibercooperante', 'INCIBE'],
+  ['05/2025', 'Prácticas de desarrollo web', 'Close · PHP y Laravel'],
+  ['04/2024 — 07/2024', 'Prácticas de soporte técnico', 'Random Consulting · Malta'],
 ];
-const writeups = [
-  { id: 'dancing', title: 'Dancing', os: 'WINDOWS', vector: 'SMB con acceso anónimo a recursos compartidos' },
-  { id: 'fawn', title: 'Fawn', os: 'LINUX', vector: 'FTP con autenticación anónima' },
-  { id: 'meow', title: 'Meow', os: 'LINUX', vector: 'Telnet con root sin contraseña' },
+const education = [
+  ['2024 — 2026', 'CFGS ASIR', 'IES Zaidín Vergeles'],
+  ['HACKING ÉTICO', 'Introducción al Hacking', 'LionxSecurity'],
+  ['2022 — 2024', 'CFGM SMR', 'IES Francisco Ayala'],
 ];
-const stack = [
-  ['OFENSIVA', 'Nmap · Burp Suite · Metasploit · ffuf · Gobuster · Hydra · Hashcat · John the Ripper · Wireshark'],
-  ['SISTEMAS', 'Linux · Windows Server · Active Directory · TCP/IP · VLAN · Firewalls · VPN'],
-  ['CÓDIGO', 'Python · Bash · PHP · Laravel · Transact-SQL'],
-];
-const links = [['web', 'vklf.es'], ['linkedin', 'LinkedIn'], ['htb', 'Hack The Box'], ['correo', 'contacto@vklf.es']];
 
 /* ----------------------------- UTILIDADES ----------------------------- */
-const W = 840, X = 48, BG = '#05070b', RED = '#d70000', RED2 = '#ff4d4d', LINE = '#2a0d0d';
+const W = 840, RED = '#d70000', RED2 = '#ff4d4d', PANEL = '#0d0606', LINE = '#2a0d0d';
 const MONO = `'Courier New',Consolas,'Liberation Mono',monospace`;
 const SANS = `'InterV',Inter,'Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif`;
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const font = `@font-face{font-family:'InterV';src:url(data:font/woff2;base64,${b64('inter.woff2')}) format('woff2');font-weight:100 900}`;
+const logo = `data:image/webp;base64,${b64('logo.webp')}`;
 const svg = (w, h, label, body, { defs = '', withFont = true } = {}) =>
   `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(label)}"><defs><style>${withFont ? font : ''}.s{font-family:${SANS}}.m{font-family:${MONO}}</style>${defs}</defs>${body}</svg>\n`;
-const save = (n, c) => { writeFileSync(join(out, n), c); console.log(n.padEnd(24), (c.length / 1024).toFixed(1) + ' KB'); };
+const save = (n, c) => { writeFileSync(join(out, n), c); console.log(n.padEnd(26), (c.length / 1024).toFixed(1) + ' KB'); };
 const monoW = (t, size, ls = 0) => t.length * (size * 0.6 + ls);
-const mono = (x, y, t, size, fill, { ls = 0, anchor = 'start', weight = 400 } = {}) =>
-  `<text x="${x}" y="${y}" class="m" font-size="${size}" font-weight="${weight}" fill="${fill}" text-anchor="${anchor}" textLength="${monoW(t, size, ls).toFixed(1)}" lengthAdjust="spacing">${esc(t)}</text>`;
+const mono = (x, y, t, size, fill, { ls = 0, anchor = 'start', weight = 400, extra = '' } = {}) =>
+  `<text x="${x}" y="${y}" class="m" font-size="${size}" font-weight="${weight}" fill="${fill}" text-anchor="${anchor}" textLength="${monoW(t, size, ls).toFixed(1)}" lengthAdjust="spacing" ${extra}>${esc(t)}</text>`;
 const sans = (x, y, t, size, fill, { weight = 400, anchor = 'start', ls = 0, extra = '' } = {}) =>
   `<text x="${x}" y="${y}" class="s" font-size="${size}" font-weight="${weight}" letter-spacing="${ls}" fill="${fill}" text-anchor="${anchor}" ${extra}>${esc(t)}</text>`;
-const wrap = (text, max) => { const l = []; let c = ''; for (const w of text.split(' ')) { if ((c + ' ' + w).trim().length > max) { l.push(c); c = w; } else c = (c + ' ' + w).trim(); } if (c) l.push(c); return l; };
-const label = (y, t) => `<rect x="${X}" y="${y - 10}" width="3" height="12" fill="${RED}"/>${mono(X + 12, y, t, 12.5, RED2, { ls: 3 })}`;
-const bg = (w, h) => `<rect width="${w}" height="${h}" fill="${BG}"/>`;
+// Barrido de brillo que cruza un panel cada pocos segundos.
+const shineDefs = (id, w, h, rx = 12) => `<clipPath id="${id}c"><rect x="1" y="1" width="${w - 2}" height="${h - 2}" rx="${rx}"/></clipPath><linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${RED2}" stop-opacity="0"/><stop offset=".5" stop-color="${RED2}" stop-opacity=".16"/><stop offset="1" stop-color="${RED2}" stop-opacity="0"/></linearGradient>`;
+const shine = (id, w, h, dur = 5, begin = 0) => `<g clip-path="url(#${id}c)"><rect x="-260" y="0" width="220" height="${h}" fill="url(#${id}g)" transform="skewX(-20)"><animate attributeName="x" values="-260;${w + 120};${w + 120}" keyTimes="0;.45;1" dur="${dur}s" begin="${begin}s" repeatCount="indefinite"/></rect></g>`;
+const panel = (w, h, rx = 12) => `<rect x="1" y="1" width="${w - 2}" height="${h - 2}" rx="${rx}" fill="${PANEL}" stroke="${LINE}" stroke-width="2"/>`;
 
 /* ------------------------------ CABECERA ------------------------------ */
 {
-  const H = 250, cx = 132, cy = 124, tx0 = 236;
-  const steps = typed.length, tw = monoW(typed, 12.5, 0.5), pw = tw + 52, ptx = tx0 + 32;
-  const kt = Array.from({ length: steps + 1 }, (_, i) => (i / steps).toFixed(4)).join(';');
-  const logo = `data:image/webp;base64,${b64('logo.webp')}`;
-  const defs = `<pattern id="g" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="${RED}" stroke-opacity=".15"/></pattern>
-    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="${BG}" stop-opacity="0"/><stop offset="1" stop-color="${BG}"/></linearGradient>
-    <linearGradient id="side" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${BG}" stop-opacity="0"/><stop offset="1" stop-color="${BG}" stop-opacity=".9"/></linearGradient>
-    <radialGradient id="halo"><stop offset="0" stop-color="${RED}" stop-opacity=".55"/><stop offset=".6" stop-color="${RED}" stop-opacity=".12"/><stop offset="1" stop-color="${RED}" stop-opacity="0"/></radialGradient>
-    <filter id="glow" x="-20%" y="-60%" width="140%" height="220%"><feGaussianBlur stdDeviation="8" result="b"/><feFlood flood-color="${RED}" flood-opacity=".7"/><feComposite in2="b" operator="in"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <clipPath id="top"><path d="M0 12a12 12 0 0 1 12-12h${W - 24}a12 12 0 0 1 12 12v${H - 12}H0z"/></clipPath>
-    <clipPath id="lg"><circle cx="${cx}" cy="${cy}" r="60"/></clipPath>
-    <clipPath id="ty"><rect x="${ptx}" y="186" height="30" width="0"><animate attributeName="width" dur="3s" begin=".5s" calcMode="discrete" keyTimes="${kt}" values="${Array.from({ length: steps + 1 }, (_, i) => (i * tw / steps + (i ? 1 : 0)).toFixed(1)).join(';')}" fill="freeze"/></rect></clipPath>`;
-  const body = `<g clip-path="url(#top)">${bg(W, H)}<rect width="${W}" height="${H}" fill="url(#g)"/><rect width="${W}" height="${H}" fill="url(#side)"/><rect width="${W}" height="${H}" fill="url(#fade)"/>
-    <rect width="${W}" height="2" fill="${RED}"/>
-    <circle cx="${cx}" cy="${cy}" r="100" fill="url(#halo)"><animate attributeName="r" values="94;106;94" dur="3.6s" repeatCount="indefinite"/></circle>
-    <circle cx="${cx}" cy="${cy}" r="62" fill="#0b0c10" stroke="${RED}" stroke-width="1.5"/>
-    <image href="${logo}" x="${cx - 60}" y="${cy - 60}" width="120" height="120" clip-path="url(#lg)"/>
-    ${mono(tx0, 78, '// VKLF', 14, RED2, { ls: 5 })}
-    ${sans(tx0 - 2, 128, name, 43, '#fff', { weight: 900, ls: 0.8, extra: 'filter="url(#glow)"' })}
-    ${sans(tx0, 162, role, 17.5, '#e9d2d2', { ls: 0.3 })}
-    <rect x="${tx0}" y="184" width="${pw.toFixed(1)}" height="32" rx="16" fill="#00ff99" fill-opacity=".05" stroke="#00ff99" stroke-opacity=".28"/>
-    ${mono(tx0 + 15, 205, '$', 12.5, RED2)}
-    <g clip-path="url(#ty)">${mono(ptx, 205, typed, 12.5, '#8ef0b0', { ls: 0.5 })}</g>
-    <rect x="${ptx}" y="193" width="8" height="15" fill="#8ef0b0"><animate attributeName="x" dur="3s" begin=".5s" calcMode="discrete" keyTimes="${kt}" values="${Array.from({ length: steps + 1 }, (_, i) => (ptx + i * tw / steps + 2).toFixed(1)).join(';')}" fill="freeze"/><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.5;.5;1" dur="1s" repeatCount="indefinite"/></rect></g>`;
-  save('cabecera.svg', svg(W, H, `${name} // VKLF — ${role}. ${typed}`, body, { defs }));
+  const H = 320, cx = W / 2, cy = 96;
+  const traces = ['M0 58H118L150 90H292L322 104H366', 'M0 150H78L108 120H236L262 132', 'M0 226H150L184 192H270', 'M60 0V34L92 66', 'M250 0V46'];
+  const trace = (d, i, flip) => `<g ${flip ? `transform="translate(${W} 0) scale(-1 1)"` : ''}><path d="${d}" fill="none" stroke="${RED}" stroke-opacity=".28" stroke-width="1.4"/><path d="${d}" fill="none" stroke="${RED2}" stroke-width="2" stroke-linecap="round" stroke-dasharray="46 700"><animate attributeName="stroke-dashoffset" values="746;0" dur="${3.2 + i * 0.7}s" begin="${(i * 0.45 + (flip ? 0.9 : 0)).toFixed(2)}s" repeatCount="indefinite"/></path></g>`;
+  const nodes = [[366, 104], [262, 132], [270, 192], [92, 66], [250, 46]];
+  const node = ([x, y], i, flip) => `<circle cx="${flip ? W - x : x}" cy="${y}" r="3.2" fill="${RED2}"><animate attributeName="opacity" values=".25;1;.25" dur="2.4s" begin="${(i * 0.3).toFixed(1)}s" repeatCount="indefinite"/></circle>`;
+  const name = 'JESÚS YESTE';
+  const nameAttrs = `x="${cx}" y="216" text-anchor="middle" class="s" font-size="54" font-weight="900" letter-spacing="7"`;
+  const gk = '0;.84;.845;.86;.865;.93;.935;.95;1';
+  const defs = `<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#050203"/><stop offset=".7" stop-color="#0d0304"/><stop offset="1" stop-color="#1c0406"/></linearGradient>
+    <radialGradient id="halo"><stop offset="0" stop-color="${RED}" stop-opacity=".6"/><stop offset=".55" stop-color="${RED}" stop-opacity=".14"/><stop offset="1" stop-color="${RED}" stop-opacity="0"/></radialGradient>
+    <linearGradient id="wv" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5c0000"/><stop offset=".5" stop-color="${RED}"/><stop offset="1" stop-color="#5c0000"/></linearGradient>
+    <linearGradient id="scan" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${RED2}" stop-opacity="0"/><stop offset=".5" stop-color="${RED2}" stop-opacity=".09"/><stop offset="1" stop-color="${RED2}" stop-opacity="0"/></linearGradient>
+    <filter id="glow" x="-20%" y="-60%" width="140%" height="220%"><feGaussianBlur stdDeviation="9" result="b"/><feFlood flood-color="${RED}" flood-opacity=".8"/><feComposite in2="b" operator="in"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <clipPath id="card"><rect width="${W}" height="${H}" rx="16"/></clipPath><clipPath id="lg"><circle cx="${cx}" cy="${cy}" r="50"/></clipPath>
+    <clipPath id="s1"><rect x="0" y="176" width="${W}" height="14"/></clipPath><clipPath id="s2"><rect x="0" y="198" width="${W}" height="10"/></clipPath>`;
+  const body = `<g clip-path="url(#card)"><rect width="${W}" height="${H}" fill="url(#bg)"/>
+    ${traces.map((d, i) => trace(d, i, false) + trace(d, i, true)).join('')}${nodes.map((n, i) => node(n, i, false) + node(n, i, true)).join('')}
+    <rect x="0" y="-80" width="${W}" height="80" fill="url(#scan)"><animate attributeName="y" values="-80;${H}" dur="5s" repeatCount="indefinite"/></rect>
+    <circle cx="${cx}" cy="${cy}" r="96" fill="url(#halo)"><animate attributeName="r" values="88;104;88" dur="3s" repeatCount="indefinite"/></circle>
+    <circle cx="${cx}" cy="${cy}" r="66" fill="none" stroke="${RED2}" stroke-width="1.6" stroke-dasharray="4 10 30 10" opacity=".85"><animateTransform attributeName="transform" type="rotate" from="0 ${cx} ${cy}" to="360 ${cx} ${cy}" dur="14s" repeatCount="indefinite"/></circle>
+    <circle cx="${cx}" cy="${cy}" r="58" fill="none" stroke="${RED}" stroke-width="1.2" stroke-dasharray="60 18 6 18" opacity=".8"><animateTransform attributeName="transform" type="rotate" from="360 ${cx} ${cy}" to="0 ${cx} ${cy}" dur="9s" repeatCount="indefinite"/></circle>
+    <circle cx="${cx}" cy="${cy}" r="51" fill="#0b0c10"/><image href="${logo}" x="${cx - 50}" y="${cy - 50}" width="100" height="100" clip-path="url(#lg)"/>
+    <text ${nameAttrs} fill="${RED2}" opacity="0">${name}<animate attributeName="opacity" values="0;0;.9;.9;0;0;.8;0;0" keyTimes="${gk}" dur="5s" repeatCount="indefinite"/><animateTransform attributeName="transform" type="translate" values="0 0;0 0;-7 2;6 -1;0 0;0 0;5 1;0 0;0 0" keyTimes="${gk}" dur="5s" repeatCount="indefinite"/></text>
+    <text ${nameAttrs} fill="#fff" filter="url(#glow)">${name}</text>
+    <g clip-path="url(#s1)"><rect x="0" y="176" width="${W}" height="14" fill="#0a0304" opacity="0"><animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;.84;.845;.865;1" dur="5s" repeatCount="indefinite"/></rect><text ${nameAttrs} fill="#fff" opacity="0">${name}<animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;.84;.845;.865;1" dur="5s" repeatCount="indefinite"/><animateTransform attributeName="transform" type="translate" values="14 0;14 0" dur="5s" repeatCount="indefinite"/></text></g>
+    <g clip-path="url(#s2)"><rect x="0" y="198" width="${W}" height="10" fill="#0a0304" opacity="0"><animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;.93;.935;.95;1" dur="5s" repeatCount="indefinite"/></rect><text ${nameAttrs} fill="#fff" opacity="0">${name}<animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;.93;.935;.95;1" dur="5s" repeatCount="indefinite"/><animateTransform attributeName="transform" type="translate" values="-12 0;-12 0" dur="5s" repeatCount="indefinite"/></text></g>
+    ${mono(cx, 252, '// VKLF //', 19, RED2, { ls: 9, anchor: 'middle', weight: 700 })}
+    <path fill="url(#wv)" opacity=".45"><animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 292C140 268 280 312 420 290S700 270 840 296V320H0Z;M0 298C140 312 280 272 420 294S700 310 840 286V320H0Z;M0 292C140 268 280 312 420 290S700 270 840 296V320H0Z"/></path>
+    <path fill="url(#wv)"><animate attributeName="d" dur="5s" repeatCount="indefinite" values="M0 306C160 292 300 318 440 304S720 296 840 308V320H0Z;M0 302C160 316 300 294 440 308S720 314 840 300V320H0Z;M0 306C160 292 300 318 440 304S720 296 840 308V320H0Z"/></path></g>`;
+  save('cabecera.svg', svg(W, H, 'Jesús Yeste // VKLF', body, { defs }));
 }
 
-/* ------------------------------ SOBRE MÍ ------------------------------ */
+/* --------------------------- LOGO EN ÓRBITA --------------------------- */
 {
-  let y = 34, t = label(y, '// SOBRE MÍ'); y += 36;
-  for (const l of wrap(about, 84)) { t += sans(X, y, l, 17, '#e6edf3'); y += 28; }
-  const H = y + 6;
-  save('sobre-mi.svg', svg(W, H, about, bg(W, H) + t));
+  const S = 300, c = S / 2;
+  const defs = `<radialGradient id="h"><stop offset="0" stop-color="${RED}" stop-opacity=".5"/><stop offset=".6" stop-color="${RED}" stop-opacity=".12"/><stop offset="1" stop-color="${RED}" stop-opacity="0"/></radialGradient><clipPath id="l"><circle cx="${c}" cy="${c}" r="84"/></clipPath>`;
+  const rot = (dur, dir = 1) => `<animateTransform attributeName="transform" type="rotate" from="${dir > 0 ? 0 : 360} ${c} ${c}" to="${dir > 0 ? 360 : 0} ${c} ${c}" dur="${dur}s" repeatCount="indefinite"/>`;
+  const body = `<circle cx="${c}" cy="${c}" r="140" fill="url(#h)"><animate attributeName="r" values="128;148;128" dur="3s" repeatCount="indefinite"/></circle>
+    <g>${rot(16)}<circle cx="${c}" cy="${c}" r="124" fill="none" stroke="${RED}" stroke-width="1.5" stroke-dasharray="3 12 44 12" opacity=".8"/><circle cx="${c + 124}" cy="${c}" r="5" fill="${RED2}"/><circle cx="${c - 124}" cy="${c}" r="3" fill="${RED2}"/></g>
+    <g>${rot(10, -1)}<circle cx="${c}" cy="${c}" r="106" fill="none" stroke="${RED2}" stroke-width="2" stroke-dasharray="80 26 8 26" opacity=".9"/><circle cx="${c}" cy="${c - 106}" r="4" fill="#fff"/></g>
+    <g>${rot(22)}<circle cx="${c}" cy="${c}" r="94" fill="none" stroke="${RED}" stroke-width="1" stroke-dasharray="2 6" opacity=".7"/></g>
+    <circle cx="${c}" cy="${c}" r="86" fill="#0b0c10" stroke="${RED}" stroke-width="2"/><image href="${logo}" x="${c - 84}" y="${c - 84}" width="168" height="168" clip-path="url(#l)"/>`;
+  save('logo-orbita.svg', svg(S, S, 'Logo de VKLF', body, { defs, withFont: false }));
 }
 
-/* -------------------------- TRES DATOS CLAVE -------------------------- */
-facts.forEach((f, i) => {
-  const w = W / 3, H = 132, x = i === 0 ? X : 28;
-  const body = `${bg(w, H)}<rect x="${i === 0 ? X : 0}" y="14" width="${i === 0 ? w - X : i === 2 ? w - X : w}" height="1" fill="${LINE}"/>
-    ${i ? `<rect x="0" y="14" width="1" height="${H - 34}" fill="${LINE}"/>` : ''}
-    ${mono(x, 46, f.label, 11, '#9a8a8a', { ls: 2.2 })}
-    ${sans(x, 82, f.big, 27, '#fff', { weight: 900, ls: 0.5 })}
-    ${sans(x, 105, f.sub, 13.5, '#9a9a9a')}
-    ${f.cta ? mono(w - 20, 46, f.cta, 10.5, RED2, { ls: 1, anchor: 'end' }) : ''}`;
-  save(`dato-${f.id}.svg`, svg(w, H, `${f.label}: ${f.big} — ${f.sub}`, body));
-});
-
-/* ------------------------------- WRITEUPS ------------------------------- */
-{
-  const H = 58;
-  save('writeups-titulo.svg', svg(W, H, 'Últimos writeups — ver todos en vklf.es', `${bg(W, H)}${label(36, '// ÚLTIMOS WRITEUPS')}${mono(W - X, 36, 'VER TODOS EN VKLF.ES →', 11, RED2, { ls: 1, anchor: 'end' })}`, { withFont: false }));
-}
-writeups.forEach((w, i) => {
-  const H = 64, tagW = monoW(w.os, 10, 0.7) + 16, tagX = W - X - 34 - tagW;
-  const defs = `<clipPath id="c"><circle cx="${X + 62}" cy="32" r="17"/></clipPath>`;
-  const body = `${bg(W, H)}<rect x="${X}" y="0" width="${W - 2 * X}" height="1" fill="${LINE}"/>${i === writeups.length - 1 ? `<rect x="${X}" y="${H - 1}" width="${W - 2 * X}" height="1" fill="${LINE}"/>` : ''}
-    ${mono(X + 4, 37, String(i + 1).padStart(2, '0'), 12.5, RED, { weight: 700 })}
-    <circle cx="${X + 62}" cy="32" r="18.2" fill="#0d0606" stroke="${RED}" stroke-width="1.2"/>
-    <image href="data:image/webp;base64,${b64(w.id + '.webp')}" x="${X + 45}" y="15" width="34" height="34" clip-path="url(#c)" preserveAspectRatio="xMidYMid slice"/>
-    ${sans(X + 98, 28, w.title, 16.5, '#fff', { weight: 700 })}
-    ${sans(X + 98, 48, w.vector, 13.5, '#9a9a9a')}
-    <rect x="${tagX.toFixed(1)}" y="22" width="${tagW.toFixed(1)}" height="20" rx="4" fill="none" stroke="#10283a"/>${mono(tagX + 8, 36, w.os, 10, '#5aa9d9', { ls: 0.7 })}
-    ${mono(W - X - 4, 37, '→', 15, RED2, { anchor: 'end' })}`;
-  save(`writeup-${w.id}.svg`, svg(W, H, `Writeup ${w.title} — Hack The Box, ${w.os}: ${w.vector}`, body, { defs }));
-});
-
-/* --------------------------------- STACK --------------------------------- */
-{
-  let y = 52, t = label(y, '// STACK'); y += 38;
-  for (const [cat, items] of stack) {
-    t += mono(X, y, cat, 11.5, '#9a8a8a', { ls: 2.2 });
-    const rows = []; let cur = [];
-    for (const it of items.split(' · ')) { if ([...cur, it].join(' · ').length > 72) { rows.push(cur.join(' · ') + ' ·'); cur = [it]; } else cur.push(it); }
-    rows.push(cur.join(' · '));
-    for (const l of rows) { t += sans(X + 138, y, l, 15, '#e6edf3'); y += 24; }
-    y += 12;
-  }
-  const H = y + 14;
-  save('stack.svg', svg(W, H, 'Stack. ' + stack.map(([c, i]) => `${c}: ${i}`).join('. '), bg(W, H) + t));
+/* -------------------------- TÍTULOS DE SECCIÓN -------------------------- */
+for (const [id, t] of Object.entries(titles)) {
+  const H = 44, text = `// ${t}`, tw = monoW(text, 18, 4), x1 = 18 + tw + 18;
+  const body = `<rect x="0" y="11" width="5" height="22" fill="${RED}"><animate attributeName="opacity" values="1;.35;1" dur="1.6s" repeatCount="indefinite"/></rect>
+    ${mono(18, 29, text, 18, RED2, { ls: 4, weight: 700 })}
+    <line x1="${x1}" y1="23" x2="${W}" y2="23" stroke="${RED}" stroke-opacity=".35" stroke-width="1.5"/>
+    <rect x="${x1}" y="21.5" width="70" height="3" rx="1.5" fill="${RED2}"><animate attributeName="x" values="${x1};${W - 70};${x1}" dur="6s" repeatCount="indefinite"/></rect>`;
+  save(`titulo-${id}.svg`, svg(W, H, t, body, { withFont: false }));
 }
 
-/* ---------------------------------- PIE ---------------------------------- */
-links.forEach(([id, text], i) => {
-  const w = W / 4, tw = monoW(text, 12, 0.3), x0 = (w - tw - 16) / 2;
-  const body = `${bg(w, 62)}<rect x="${i === 0 ? X : 0}" y="0" width="${i === 0 || i === 3 ? w - X : w}" height="1" fill="${RED}" opacity=".5"/>${mono(x0, 38, '>', 12, '#27c93f', { weight: 700 })}${mono(x0 + 16, 38, text, 12, '#e6edf3', { ls: 0.3 })}`;
-  save(`pie-${id}.svg`, svg(w, 62, text, body, { withFont: false }));
-});
+/* ---------------------------- CERTIFICACIÓN ---------------------------- */
 {
-  const H = 44, defs = `<clipPath id="b"><path d="M0 0h${W}v${H - 12}a12 12 0 0 1-12 12H12a12 12 0 0 1-12-12z"/></clipPath>`;
-  save('pie.svg', svg(W, H, '© 2026 Jesús Yeste // VKLF', `<g clip-path="url(#b)">${bg(W, H)}${mono(W / 2, 18, '© 2026 JESÚS YESTE // VKLF', 10, '#6e7681', { anchor: 'middle', ls: 1.5 })}</g>`, { defs, withFont: false }));
+  const H = 150, hx = 92, hy = 75;
+  const hex = (r) => Array.from({ length: 6 }, (_, i) => { const a = Math.PI / 3 * i - Math.PI / 2; return `${(hx + r * Math.cos(a)).toFixed(1)},${(hy + r * Math.sin(a)).toFixed(1)}`; }).join(' ');
+  const defs = `${shineDefs('p', W, H)}<linearGradient id="hx" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${RED2}"/><stop offset="1" stop-color="#8a0000"/></linearGradient>`;
+  const body = `${panel(W, H)}<rect x="1" y="1" width="6" height="${H - 2}" rx="3" fill="${RED}"/>
+    <polygon points="${hex(58)}" fill="none" stroke="${RED2}" stroke-width="1.5"><animate attributeName="opacity" values=".15;.9;.15" dur="2.4s" repeatCount="indefinite"/><animateTransform attributeName="transform" type="rotate" from="0 ${hx} ${hy}" to="360 ${hx} ${hy}" dur="24s" repeatCount="indefinite"/></polygon>
+    <polygon points="${hex(46)}" fill="url(#hx)"/>
+    ${sans(hx, hy + 2, 'eJPT', 22, '#fff', { weight: 900, anchor: 'middle' })}${sans(hx, hy + 21, 'v2', 14, '#1a0000', { weight: 800, anchor: 'middle' })}
+    ${mono(176, 46, 'CERTIFICACIÓN VERIFICADA', 11.5, '#9a8a8a', { ls: 2.4 })}
+    ${sans(176, 80, 'eLearnSecurity Junior Penetration Tester', 23, '#fff', { weight: 800 })}
+    ${sans(176, 108, 'INE Security · Emitida 08/2026 · Válida hasta 08/2029', 14.5, '#b9a9a9')}
+    <rect x="${W - 168}" y="96" width="140" height="34" rx="8" fill="none" stroke="${RED}"><animate attributeName="stroke-opacity" values="1;.35;1" dur="2s" repeatCount="indefinite"/></rect>
+    ${mono(W - 98, 118, 'VERIFICAR →', 12, RED2, { ls: 1.2, anchor: 'middle', weight: 700 })}${shine('p', W, H, 4.5)}`;
+  save('certificacion.svg', svg(W, H, 'Certificación eJPTv2 — eLearnSecurity Junior Penetration Tester, INE Security. Emitida 08/2026, válida hasta 08/2029. Pulsa para verificar.', body, { defs }));
+}
+
+/* ------------------------ EXPERIENCIA Y FORMACIÓN ------------------------ */
+{
+  const gap = 16, lw = 500, rw = W - lw - gap, H = 30 + experience.length * 70 + 14;
+  let t = '';
+  // Experiencia
+  t += `<g>${panel(lw, H)}${mono(28, 38, 'EXPERIENCIA', 12, RED2, { ls: 3, weight: 700 })}<line x1="40" y1="64" x2="40" y2="${H - 44}" stroke="${LINE}" stroke-width="2"/>`;
+  experience.forEach(([d, r, o], i) => {
+    const y = 76 + i * 70, live = d.includes('HOY');
+    t += live ? `<circle cx="40" cy="${y - 5}" r="6" fill="${RED}"><animate attributeName="r" values="5;8.5;5" dur="1.8s" begin="${i * 0.5}s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;.55;1" dur="1.8s" begin="${i * 0.5}s" repeatCount="indefinite"/></circle>` : `<circle cx="40" cy="${y - 5}" r="5.5" fill="${PANEL}" stroke="${RED}" stroke-width="2"/>`;
+    t += mono(64, y, d, 11.5, RED2, { ls: 1 }) + sans(64, y + 23, r, 17, '#fff', { weight: 700 }) + sans(64, y + 43, o, 13.5, '#b9a9a9');
+  });
+  t += `${shine('a', lw, H, 6)}</g>`;
+  // Formación
+  const ch = (H - 62 - 2 * 12) / 3;
+  t += `<g transform="translate(${lw + gap} 0)">${panel(rw, H)}${mono(28, 38, 'FORMACIÓN', 12, RED2, { ls: 3, weight: 700 })}`;
+  education.forEach(([d, r, o], i) => {
+    const y = 56 + i * (ch + 12);
+    t += `<rect x="20" y="${y}" width="${rw - 40}" height="${ch}" rx="8" fill="#140808" stroke="${LINE}"/>` + mono(36, y + 24, d, 11, RED2, { ls: 1 }) + sans(36, y + 48, r, 17, '#fff', { weight: 700 }) + sans(36, y + 68, o, 13, '#b9a9a9');
+  });
+  t += `${shine('b', rw, H, 6, 1.5)}</g>`;
+  save('trayectoria.svg', svg(W, H, 'Experiencia: ' + experience.map((e) => e.join(' · ')).join('; ') + '. Formación: ' + education.map((e) => e.join(' · ')).join('; ') + '.', t, { defs: shineDefs('a', lw, H) + shineDefs('b', rw, H) }));
+}
+
+/* ----------------------------------- PIE ----------------------------------- */
+{
+  const H = 150;
+  const defs = `<linearGradient id="wv" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5c0000"/><stop offset=".5" stop-color="${RED}"/><stop offset="1" stop-color="#5c0000"/></linearGradient><clipPath id="c"><rect width="${W}" height="${H}" rx="16"/></clipPath><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#050203"/><stop offset="1" stop-color="#1c0406"/></linearGradient>`;
+  const body = `<g clip-path="url(#c)"><rect width="${W}" height="${H}" fill="url(#bg)"/>
+    ${sans(W / 2, 56, '«La seguridad no es un producto, sino un proceso.»', 21, '#fff', { weight: 600, anchor: 'middle' })}
+    ${mono(W / 2, 84, '— BRUCE SCHNEIER', 11.5, RED2, { ls: 2.5, anchor: 'middle' })}
+    <path fill="url(#wv)" opacity=".45"><animate attributeName="d" dur="7s" repeatCount="indefinite" values="M0 122C140 100 280 140 420 120S700 102 840 126V150H0Z;M0 128C140 142 280 104 420 124S700 140 840 116V150H0Z;M0 122C140 100 280 140 420 120S700 102 840 126V150H0Z"/></path>
+    <path fill="url(#wv)"><animate attributeName="d" dur="5s" repeatCount="indefinite" values="M0 136C160 122 300 148 440 134S720 126 840 138V150H0Z;M0 132C160 146 300 124 440 138S720 144 840 130V150H0Z;M0 136C160 122 300 148 440 134S720 126 840 138V150H0Z"/></path></g>`;
+  save('pie.svg', svg(W, H, '«La seguridad no es un producto, sino un proceso.» — Bruce Schneier', body, { defs }));
 }
