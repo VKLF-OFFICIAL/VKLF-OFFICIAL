@@ -48,7 +48,7 @@
       <text x="32" y="294"><tspan class="p">root@vklf</tspan><tspan class="o">:~$ </tspan><tspan class="c">echo $OBJETIVO</tspan></text>
     </g>
     <g opacity="0"><animate attributeName="opacity" from="0" to="1" begin="4.4s" dur=".15s" fill="freeze"/>
-      <text x="32" y="322" class="h">Romper sistemas para hacerlos más fuertes, y documentarlo paso a paso.</text>
+      <text x="32" y="322" class="h">Formar parte de un equipo de ciberseguridad de alto rendimiento.</text>
     </g>
   </g>
 
