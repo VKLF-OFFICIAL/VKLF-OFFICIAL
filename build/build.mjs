@@ -13,10 +13,10 @@ const b64 = (f) => readFileSync(join(here, 'src', f)).toString('base64');
 /* ------------------------------ DATOS ------------------------------ */
 const titles = { 'sobre-mi': 'SOBRE MÍ', certificacion: 'CERTIFICACIÓN', arsenal: 'ARSENAL', trayectoria: 'EXPERIENCIA Y FORMACIÓN', github: 'GITHUB', contacto: 'CONTACTO' };
 const experience = [
-  ['09/2026 — HOY', 'Profesor de ciberseguridad', 'LionxSecurity'],
-  ['09/2026 — HOY', 'Cibercooperante', 'INCIBE'],
-  ['05/2025', 'Prácticas de desarrollo web', 'Close · PHP y Laravel'],
-  ['04/2024 — 07/2024', 'Prácticas de soporte técnico', 'Random Consulting · Malta'],
+  ['09/2026 — HOY', 'Profesor de ciberseguridad', 'LionxSecurity', 'ACTUAL'],
+  ['09/2026 — HOY', 'Cibercooperante', 'INCIBE · Instituto Nacional de Ciberseguridad', 'ACTUAL'],
+  ['05/2025', 'Prácticas de desarrollo web', 'Close · PHP y Laravel', 'PRÁCTICAS'],
+  ['04/2024 — 07/2024', 'Prácticas de soporte técnico', 'Random Consulting · Malta', 'PRÁCTICAS'],
 ];
 const education = [
   ['2024 — 2026', 'CFGS ASIR', 'IES Zaidín Vergeles'],
@@ -40,8 +40,8 @@ const mono = (x, y, t, size, fill, { ls = 0, anchor = 'start', weight = 400, ext
 const sans = (x, y, t, size, fill, { weight = 400, anchor = 'start', ls = 0, extra = '' } = {}) =>
   `<text x="${x}" y="${y}" class="s" font-size="${size}" font-weight="${weight}" letter-spacing="${ls}" fill="${fill}" text-anchor="${anchor}" ${extra}>${esc(t)}</text>`;
 // Barrido de brillo que cruza un panel cada pocos segundos.
-const shineDefs = (id, w, h, rx = 12) => `<clipPath id="${id}c"><rect x="1" y="1" width="${w - 2}" height="${h - 2}" rx="${rx}"/></clipPath><linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${RED2}" stop-opacity="0"/><stop offset=".5" stop-color="${RED2}" stop-opacity=".16"/><stop offset="1" stop-color="${RED2}" stop-opacity="0"/></linearGradient>`;
-const shine = (id, w, h, dur = 5, begin = 0) => `<g clip-path="url(#${id}c)"><rect x="-260" y="0" width="220" height="${h}" fill="url(#${id}g)" transform="skewX(-20)"><animate attributeName="x" values="-260;${w + 120};${w + 120}" keyTimes="0;.45;1" dur="${dur}s" begin="${begin}s" repeatCount="indefinite"/></rect></g>`;
+const shineDefs = (id, w, h, rx = 12) => `<clipPath id="${id}c"><rect x="1" y="1" width="${w - 2}" height="${h - 2}" rx="${rx}"/></clipPath><linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${RED2}" stop-opacity="0"/><stop offset=".5" stop-color="${RED2}" stop-opacity=".09"/><stop offset="1" stop-color="${RED2}" stop-opacity="0"/></linearGradient>`;
+const shine = (id, w, h, dur = 5, begin = 0) => `<g clip-path="url(#${id}c)"><rect x="-140" y="0" width="110" height="${h}" fill="url(#${id}g)"><animate attributeName="x" values="-140;${w + 30};${w + 30}" keyTimes="0;.3;1" dur="${dur}s" begin="${begin}s" repeatCount="indefinite"/></rect></g>`;
 const panel = (w, h, rx = 12) => `<rect x="1" y="1" width="${w - 2}" height="${h - 2}" rx="${rx}" fill="${PANEL}" stroke="${LINE}" stroke-width="2"/>`;
 
 /* ------------------------------ CABECERA ------------------------------ */
@@ -118,27 +118,36 @@ for (const [id, t] of Object.entries(titles)) {
   save('certificacion.svg', svg(W, H, 'Certificación eJPTv2 — eLearnSecurity Junior Penetration Tester, INE Security. Emitida 08/2026, válida hasta 08/2029. Pulsa para verificar.', body, { defs }));
 }
 
-/* ------------------------ EXPERIENCIA Y FORMACIÓN ------------------------ */
+/* ------------------------------ EXPERIENCIA ------------------------------ */
 {
-  const gap = 16, lw = 500, rw = W - lw - gap, H = 76 + (experience.length - 1) * 70 + 43 + 26;
-  let t = '';
-  // Experiencia
-  t += `<g>${panel(lw, H)}${mono(28, 38, 'EXPERIENCIA', 12, RED2, { ls: 3, weight: 700 })}<line x1="40" y1="64" x2="40" y2="${H - 44}" stroke="${LINE}" stroke-width="2"/>`;
-  experience.forEach(([d, r, o], i) => {
-    const y = 76 + i * 70, live = d.includes('HOY');
-    t += live ? `<circle cx="40" cy="${y - 5}" r="6" fill="${RED}"><animate attributeName="r" values="5;8.5;5" dur="1.8s" begin="${i * 0.5}s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;.55;1" dur="1.8s" begin="${i * 0.5}s" repeatCount="indefinite"/></circle>` : `<circle cx="40" cy="${y - 5}" r="5.5" fill="${PANEL}" stroke="${RED}" stroke-width="2"/>`;
-    t += mono(64, y, d, 11.5, RED2, { ls: 1 }) + sans(64, y + 23, r, 17, '#fff', { weight: 700 }) + sans(64, y + 43, o, 13.5, '#b9a9a9');
+  const row = 66, top = 84, H = top + experience.length * row - 14;
+  let t = panel(W, H) + mono(30, 40, 'EXPERIENCIA', 12.5, RED2, { ls: 3, weight: 700 }) + '<line x1="30" y1="54" x2="' + (W - 30) + '" y2="54" stroke="' + LINE + '"/>';
+  t += '<line x1="46" y1="' + (top - 6) + '" x2="46" y2="' + (top + (experience.length - 1) * row - 6) + '" stroke="' + LINE + '" stroke-width="2"/>';
+  experience.forEach(([d, r, o, tag], i) => {
+    const y = top + i * row, live = d.includes('HOY');
+    if (live) t += '<circle cx="46" cy="' + (y - 6) + '" r="6" fill="none" stroke="' + RED2 + '" stroke-width="1.5"><animate attributeName="r" values="6;15" dur="1.8s" repeatCount="indefinite"/><animate attributeName="opacity" values=".8;0" dur="1.8s" repeatCount="indefinite"/></circle><circle cx="46" cy="' + (y - 6) + '" r="6" fill="' + RED + '"/>';
+    else t += '<circle cx="46" cy="' + (y - 6) + '" r="5.5" fill="' + PANEL + '" stroke="' + RED + '" stroke-width="2"/>';
+    t += mono(72, y - 1, d, 12, RED2, { ls: 0.8 });
+    t += sans(250, y, r, 17.5, '#fff', { weight: 700 }) + sans(250, y + 22, o, 14, '#b9a9a9');
+    const tw = monoW(tag, 10.5, 1.2) + 20, tx = W - 30 - tw;
+    t += '<rect x="' + tx.toFixed(1) + '" y="' + (y - 17) + '" width="' + tw.toFixed(1) + '" height="24" rx="5" fill="' + (live ? RED : 'none') + '" stroke="' + (live ? RED : '#5c1a1a') + '"/>' + mono(tx + 10, y - 1, tag, 10.5, live ? '#fff' : RED2, { ls: 1.2, weight: live ? 700 : 400 });
+    if (i) t += '<line x1="72" y1="' + (y - 30) + '" x2="' + (W - 30) + '" y2="' + (y - 30) + '" stroke="' + LINE + '" stroke-opacity=".7"/>';
   });
-  t += `${shine('a', lw, H, 6)}</g>`;
-  // Formación
-  const ch = (H - 62 - 2 * 12) / 3;
-  t += `<g transform="translate(${lw + gap} 0)">${panel(rw, H)}${mono(28, 38, 'FORMACIÓN', 12, RED2, { ls: 3, weight: 700 })}`;
+  t += shine('a', W, H, 7);
+  save('experiencia.svg', svg(W, H, 'Experiencia: ' + experience.map((e) => e.slice(0, 3).join(' · ')).join('; ') + '.', t, { defs: shineDefs('a', W, H) }));
+}
+
+/* ------------------------------- FORMACIÓN ------------------------------- */
+{
+  const H = 176, gap = 14, cw = (W - 60 - gap * (education.length - 1)) / education.length;
+  let t = panel(W, H) + mono(30, 40, 'FORMACIÓN', 12.5, RED2, { ls: 3, weight: 700 }) + '<line x1="30" y1="54" x2="' + (W - 30) + '" y2="54" stroke="' + LINE + '"/>';
   education.forEach(([d, r, o], i) => {
-    const y = 56 + i * (ch + 12);
-    t += `<rect x="20" y="${y}" width="${rw - 40}" height="${ch}" rx="8" fill="#140808" stroke="${LINE}"/>` + mono(36, y + 24, d, 11, RED2, { ls: 1 }) + sans(36, y + 48, r, 17, '#fff', { weight: 700 }) + sans(36, y + 68, o, 13, '#b9a9a9');
+    const x = 30 + i * (cw + gap);
+    t += '<rect x="' + x.toFixed(1) + '" y="70" width="' + cw.toFixed(1) + '" height="86" rx="8" fill="#140808" stroke="' + LINE + '"/><rect x="' + x.toFixed(1) + '" y="70" width="3" height="86" rx="1.5" fill="' + RED + '"/>';
+    t += mono(x + 18, 94, d, 11, RED2, { ls: 1 }) + sans(x + 18, 120, r, 17.5, '#fff', { weight: 700 }) + sans(x + 18, 142, o, 13.5, '#b9a9a9');
   });
-  t += `${shine('b', rw, H, 6, 1.5)}</g>`;
-  save('trayectoria.svg', svg(W, H, 'Experiencia: ' + experience.map((e) => e.join(' · ')).join('; ') + '. Formación: ' + education.map((e) => e.join(' · ')).join('; ') + '.', t, { defs: shineDefs('a', lw, H) + shineDefs('b', rw, H) }));
+  t += shine('b', W, H, 7, 2);
+  save('formacion.svg', svg(W, H, 'Formación: ' + education.map((e) => e.join(' · ')).join('; ') + '.', t, { defs: shineDefs('b', W, H) }));
 }
 
 /* ----------------------------------- PIE ----------------------------------- */

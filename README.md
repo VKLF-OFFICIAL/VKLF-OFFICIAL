@@ -71,7 +71,9 @@
 
 <img src="assets/titulo-trayectoria.svg" width="100%" alt="Experiencia y formación"/>
 
-<img src="assets/trayectoria.svg" width="100%" alt="Experiencia: profesor de ciberseguridad en LionxSecurity y cibercooperante del INCIBE (desde 09/2026), prácticas de desarrollo web en Close (05/2025) y de soporte técnico en Random Consulting, Malta (2024). Formación: CFGS ASIR (2024–2026), Introducción al Hacking en LionxSecurity y CFGM SMR (2022–2024)."/>
+<img src="assets/experiencia.svg" width="100%" alt="Experiencia: profesor de ciberseguridad en LionxSecurity (09/2026 — hoy); cibercooperante del INCIBE (09/2026 — hoy); prácticas de desarrollo web en Close, PHP y Laravel (05/2025); prácticas de soporte técnico en Random Consulting, Malta (04/2024 — 07/2024)."/>
+
+<img src="assets/formacion.svg" width="100%" alt="Formación: CFGS ASIR, IES Zaidín Vergeles (2024 — 2026); Introducción al Hacking, LionxSecurity; CFGM SMR, IES Francisco Ayala (2022 — 2024)."/>
 
 <img src="assets/titulo-github.svg" width="100%" alt="GitHub"/>
 
