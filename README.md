@@ -12,7 +12,7 @@
 
 <br/>
 
-🔐 **Pentester junior**: rompo sistemas para aprender a protegerlos
+🔐 **Pentester**: rompo sistemas para aprender a protegerlos
 
 🏴‍☠️ **eJPTv2** certificado por INE Security
 
