@@ -2,7 +2,7 @@
 
 <a href="https://vklf.es"><img src="assets/cabecera.svg" width="100%" alt="Jesús Yeste // VKLF"/></a>
 
-<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1000&color=FF4D4D&center=true&vCenter=true&width=700&lines=Pentester+junior+%2F%2F+eJPTv2;Profesor+de+ciberseguridad+en+LionxSecurity;Cibercooperante+del+INCIBE;Hack+The+Box+%2F%2F+CTF+player" alt="Pentester junior // eJPTv2 · Profesor de ciberseguridad en LionxSecurity · Cibercooperante del INCIBE · Hack The Box // CTF player"/></a>
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1000&color=FF4D4D&center=true&vCenter=true&width=700&lines=Pentester+junior+%2F%2F+eJPTv2;Profesor+de+ciberseguridad+en+LionxSecurity;Cibercooperante+del+INCIBE;Hack+The+Box+%2F%2F+CTF+player" alt="Pentester // eJPTv2 · Profesor de ciberseguridad en LionxSecurity · Cibercooperante del INCIBE · Hack The Box // CTF player"/></a>
 
 </div>
 
