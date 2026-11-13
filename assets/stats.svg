@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="290" viewBox="0 0 1000 290" role="img" aria-label="Estadísticas de GitHub de VKLF-OFFICIAL: Commits públicos 261, Repositorios públicos 12, Estrellas recibidas 6, Lenguajes distintos 9, En GitHub desde 2025. Lenguajes: Python 46.0%, TypeScript 19.0%, Kotlin 12.2%, JavaScript 11.4%, CSS 5.1%, HTML 4.2%.">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="290" viewBox="0 0 1000 290" role="img" aria-label="Estadísticas de GitHub de VKLF-OFFICIAL: Commits públicos 0, Repositorios públicos 12, Estrellas recibidas 6, Lenguajes distintos 9, En GitHub desde 2025. Lenguajes: Python 46.0%, TypeScript 19.0%, Kotlin 12.2%, JavaScript 11.4%, CSS 5.1%, HTML 4.2%.">
   <defs><style>
     .m{font-family:'Courier New',Consolas,'Liberation Mono',monospace}
     .h{font-size:13px;fill:#d70000;letter-spacing:2px}
@@ -13,7 +13,7 @@
   <text x="586" y="40" class="m h">// LENGUAJES</text>
 <g>
     <text x="28" y="92" class="m s"><tspan fill="#d70000">&gt;</tspan> Commits públicos</text>
-    <text x="520" y="92" class="m v" text-anchor="end">261</text>
+    <text x="520" y="92" class="m v" text-anchor="end">0</text>
     <line x1="28" y1="103" x2="520" y2="103" stroke="#2a0d0d" stroke-width="1"/></g>
 <g>
     <text x="28" y="122" class="m s"><tspan fill="#d70000">&gt;</tspan> Repositorios públicos</text>
@@ -32,7 +32,7 @@
     <text x="520" y="212" class="m v" text-anchor="end">2025</text>
     <line x1="28" y1="223" x2="520" y2="223" stroke="#2a0d0d" stroke-width="1"/></g>
   <rect x="586" y="78" width="384" height="10" rx="5" fill="#140808"/>
-  <g clip-path="url(#bar)"><rect x="586.0" y="78" width="176.8" height="10" fill="#d70000"/><rect x="762.8" y="78" width="73.0" height="10" fill="#ff4d4d"/><rect x="835.8" y="78" width="46.8" height="10" fill="#b03a1f"/><rect x="882.6" y="78" width="43.6" height="10" fill="#8a1f1f"/><rect x="926.2" y="78" width="19.5" height="10" fill="#c80101"/><rect x="945.7" y="78" width="16.3" height="10" fill="#9a8a8a"/></g>
+  <g clip-path="url(#bar)"><rect x="586.0" y="78" width="176.7" height="10" fill="#d70000"/><rect x="762.7" y="78" width="72.9" height="10" fill="#ff4d4d"/><rect x="835.6" y="78" width="46.8" height="10" fill="#b03a1f"/><rect x="882.4" y="78" width="43.8" height="10" fill="#8a1f1f"/><rect x="926.2" y="78" width="19.5" height="10" fill="#c80101"/><rect x="945.7" y="78" width="16.2" height="10" fill="#9a8a8a"/></g>
 <circle cx="592" cy="119" r="6" fill="#d70000"/>
     <text x="606" y="124" class="m s">Python <tspan fill="#9a8a8a">46.0%</tspan></text>
 <circle cx="788" cy="119" r="6" fill="#ff4d4d"/>
@@ -45,5 +45,5 @@
     <text x="606" y="192" class="m s">CSS <tspan fill="#9a8a8a">5.1%</tspan></text>
 <circle cx="788" cy="187" r="6" fill="#9a8a8a"/>
     <text x="802" y="192" class="m s">HTML <tspan fill="#9a8a8a">4.2%</tspan></text>
-  <text x="970" y="270" class="m f" text-anchor="end">actualizado 12/11/2026</text>
+  <text x="970" y="270" class="m f" text-anchor="end">actualizado 13/11/2026</text>
 </svg>
