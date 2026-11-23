@@ -32,7 +32,7 @@
     <text x="520" y="212" class="m v" text-anchor="end">2025</text>
     <line x1="28" y1="223" x2="520" y2="223" stroke="#2a0d0d" stroke-width="1"/></g>
   <rect x="586" y="78" width="384" height="10" rx="5" fill="#140808"/>
-  <g clip-path="url(#bar)"><rect x="586.0" y="78" width="173.9" height="10" fill="#d70000"/><rect x="759.9" y="78" width="77.9" height="10" fill="#ff4d4d"/><rect x="837.8" y="78" width="46.0" height="10" fill="#b03a1f"/><rect x="883.8" y="78" width="43.1" height="10" fill="#8a1f1f"/><rect x="926.9" y="78" width="19.2" height="10" fill="#c80101"/><rect x="946.1" y="78" width="16.0" height="10" fill="#9a8a8a"/></g>
+  <g clip-path="url(#bar)"><rect x="586.0" y="78" width="174.0" height="10" fill="#d70000"/><rect x="760.0" y="78" width="77.8" height="10" fill="#ff4d4d"/><rect x="837.8" y="78" width="46.0" height="10" fill="#b03a1f"/><rect x="883.9" y="78" width="43.1" height="10" fill="#8a1f1f"/><rect x="926.9" y="78" width="19.2" height="10" fill="#c80101"/><rect x="946.1" y="78" width="16.0" height="10" fill="#9a8a8a"/></g>
 <circle cx="592" cy="119" r="6" fill="#d70000"/>
     <text x="606" y="124" class="m s">Python <tspan fill="#9a8a8a">45.3%</tspan></text>
 <circle cx="788" cy="119" r="6" fill="#ff4d4d"/>
@@ -45,5 +45,5 @@
     <text x="606" y="192" class="m s">CSS <tspan fill="#9a8a8a">5.0%</tspan></text>
 <circle cx="788" cy="187" r="6" fill="#9a8a8a"/>
     <text x="802" y="192" class="m s">HTML <tspan fill="#9a8a8a">4.2%</tspan></text>
-  <text x="970" y="270" class="m f" text-anchor="end">actualizado 22/11/2026</text>
+  <text x="970" y="270" class="m f" text-anchor="end">actualizado 23/11/2026</text>
 </svg>
